@@ -53,7 +53,7 @@ client.on("ready", () => {
   console.log(client.guilds.map(c => `${c.name} : ${c.me.hasPermission(8)}`));
   client.user.setStatus("online");
 
-  client.user.setActivity(`Old's Union UP UP ;D`, { type: "WATCHING" });
+  client.user.setActivity(`United Old's UP UP ;D`, { type: "WATCHING" });
 });
 
 
@@ -127,7 +127,7 @@ client.on("guildMemberAdd", async member => {
   if (!channel) return;
   if (channel) {
     const imageUrlRegex = /\?size=2048$/g; ///تعديل غير اساسي
-    const wlcImage = await fsn.readFile("./welcome111.png"); //اسم الصورة
+    const wlcImage = await fsn.readFile("./wlc-img.png"); //اسم الصورة
     let result = await fetch(
       member.user.displayAvatarURL.replace(imageUrlRegex, "?size=128")
     );
@@ -135,39 +135,39 @@ client.on("guildMemberAdd", async member => {
     let avatar = await result.buffer();
 
     let name =
-      member.user.username.length > 12
-        ? member.user.username.substring(0, 11) + "..."
+      member.user.username.length > 6
+        ? member.user.username.substring(0, 6) + ".."
         : member.user.username;
 
     // تعديل غير اساسي : هنا خيارات الصورة لو تبى تغيرها
 
     //Welcome Image (background)
     var imageWidth = 500; //عرض الصورة
-    var imageHeight = 266; //ارتفاع الصورة
+    var imageHeight = 250; //ارتفاع الصورة
 
     //Avatar
-    var imageX = 250; //X coordinate
-    var imageY = 145; //Y coordinate
-    var imageRadius = 109.4; //نصف قطر الصورة الدائرية
+    var imageX = 115; //X coordinate
+    var imageY = 153; //Y coordinate
+    var imageRadius = 85.5; //نصف قطر الصورة الدائرية
 
     //Member Name
-    var nameSize = "12pt"; //حجم خط الاسم
+    var nameSize = "16.5pt"; //حجم خط الاسم
     var nameKind = "Source Sans Pro (OT1)"; //نوع خط الاسم
-    var nameColor = "#ff9933"; //لون خط الاسم
+    var nameColor = "#ffffff";
 
     //Name Position
-    var nameX = 247; //position x
-    var nameY = 275; //position y
+    var nameX = 260; //position x
+    var nameY = 155; //position y
 
     let buffer = await new Canvas(500, 300)
-      .addImage(wlcImage, 0, 0, imageWidth, imageHeight)
+        .addImage(wlcImage, 0, 0, imageWidth, imageHeight)
       .addCircularImage(avatar, imageX, imageY, imageRadius)
       .setTextAlign("center")
       .setTextFont(`${nameSize} ${nameKind}`)
       .setColor(nameColor)
-      .addText( nameX, nameY)
+      .addText(name, nameX, nameY)
       .toBuffer();
-    const filename = `Baron-wlc-${member.id}.jpg`;
+    const filename = `tahaWELCOMER${member.id}.jpg`;
     const attachment = new Attachment(buffer, filename);
     await channel.send(attachment);
   }
@@ -440,7 +440,14 @@ client.on("message", message => {
 
 
 
-
+client.on('message', message => {
+    if(message.content.includes("discord.gg/")) {
+     if(message.channel.type === "dm") return;
+      if(message.member.hasPermission('ADMINISTRATOR')) return console.log(` >> Someone admin has putting a link on channel! <<`);
+        message.delete()
+    //  console.log(' >> Message delete and a reason is: member has shared a server link <<')
+    }
+});
 
 
 
